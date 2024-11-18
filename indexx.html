@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+    <title>Student Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Montserrat:wght@900&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/root.css">
+    <link rel="stylesheet" href="assets/css/scrollbar.css">
+    <link rel="stylesheet" href="assets/css/media.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-xxxxx" crossorigin="anonymous" />
+
+    
+
+</head>
+
+<body class="classic-bg">
+    <script src="./printFunction.js"></script>
+    <input id="close-menu" class="close-menu" type="checkbox" aria-label="Close menu" role="button">
+    <label class="close-menu-label" for="close-menu" title="close menu"></label>
+    <aside class="menu">
+        <div class="main-content menu-content">
+            <h1 onclick="getElementById('close-menu').checked = false;" style="margin-top: 0.7rem;"><a href="#home">EduVault<img class="icon-home" src="assets/img/home.png" alt="Home"></a></h1>
+            <nav>
+                <ul onclick="getElementById('close-menu').checked = false;">
+                    <li><a href="#top3">Courses</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#gallery">Achievements</a></li>
+                    <li><a href="#internship">Internships</a></li>
+                    <li><a href="#cert">Workshop</a></li>
+                    <li><a href="#print-academic-details">Export</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+
+    <div id="home" class="menu-spacing"></div>
+    <section class="section classic-bg">
+        <div class="home-content">
+            
+            <h2 id="mobile-al" style="text-align: center;">EduVault</h2>
+            <h2 id="mobile-al" style="text-align: center;">______________</h2>
+            <p>
+                EduVault (Student Profile Management System) is an innovative platform designed to facilitate the effective capture, sharing, and management of knowledge within organizations. By providing a centralized repository and collaborative tools, it empowers users to enhance communication, streamline processes, and make informed decisions. This system fosters a culture of continuous learning and innovation, driving overall organizational success.
+            </p>
+            <h2 id="mobile-al" style="text-align: center;">______________</h2>
+        </div>
+    </section>
+    
+    
+    
+
+    <section id="top3" class="section darkgray-bg">
+        <div class="menu-spacing"></div>
+        <div class="home-content">
+            <h2 id="mobile-al" style="text-align: center;">
+                Courses Completed
+                <button onclick="addCourse()" style="margin-left: 20px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Add Course</button>
+            </h2>
+            
+            <table id="courses-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 20px; background-color: #f0f0f0;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Course ID</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Course Name</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Enrollment Date</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Completion Date</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Grade</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <script>
+        // Sample data with at least 10 courses including Enrollment Date and Course ID
+        const courses = [
+           /* { id: "C001", name: "JavaScript Basics", enrollmentDate: "2024-09-01", date: "2024-10-01", grade: "A" },
+            { id: "C002", name: "Advanced CSS", enrollmentDate: "2024-08-01", date: "2024-09-15", grade: "B+" },
+            { id: "C003", name: "React Development", enrollmentDate: "2024-07-01", date: "2024-08-20", grade: "A-" },
+            { id: "C004", name: "Python for Data Science", enrollmentDate: "2024-06-01", date: "2024-07-30", grade: "A" },
+            { id: "C005", name: "Machine Learning Basics", enrollmentDate: "2024-05-01", date: "2024-06-25", grade: "B" },
+            { id: "C006", name: "Database Management", enrollmentDate: "2024-04-01", date: "2024-05-12", grade: "B+" },
+            { id: "C007", name: "Java Programming", enrollmentDate: "2024-03-01", date: "2024-04-28", grade: "A" },
+            { id: "C008", name: "HTML & CSS Fundamentals", enrollmentDate: "2024-02-01", date: "2024-03-10", grade: "A-" },
+            { id: "C009", name: "Data Structures", enrollmentDate: "2024-01-01", date: "2024-02-15", grade: "B" },
+            { id: "C010", name: "Algorithm Design", enrollmentDate: "2023-12-01", date: "2024-01-20", grade: "A+" }*/
+        ];
+    
+        // Function to populate table
+        function populateTable(data) {
+            const tableBody = document.querySelector("#courses-table tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+            data.forEach((course, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="border: 1px solid #ddd; padding: 10px;">${course.id}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${course.name}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${course.enrollmentDate}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${course.date}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${course.grade}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">
+                        <button onclick="editCourse(${index})" style="padding: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                        <button onclick="deleteCourse(${index})" style="padding: 5px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Function to add a new course
+        function addCourse() {
+            const courseId = prompt("Enter Course ID:");
+            const courseName = prompt("Enter Course Name:");
+            const enrollmentDate = prompt("Enter Enrollment Date (YYYY-MM-DD):");
+            const completionDate = prompt("Enter Completion Date (YYYY-MM-DD):");
+            const grade = prompt("Enter Grade:");
+    
+            if (courseId && courseName && enrollmentDate && completionDate && grade) {
+                courses.push({ id: courseId, name: courseName, enrollmentDate, date: completionDate, grade });
+                populateTable(courses);
+            } else {
+                alert("All fields are required to add a new course.");
+            }
+        }
+    
+        // Function to delete a single course
+        function deleteCourse(index) {
+            courses.splice(index, 1);
+            populateTable(courses);
+        }
+    
+        // Function to edit a course
+        function editCourse(index) {
+            const course = courses[index];
+            const newCourseId = prompt("Edit Course ID:", course.id);
+            const newCourseName = prompt("Edit Course Name:", course.name);
+            const newEnrollmentDate = prompt("Edit Enrollment Date (YYYY-MM-DD):", course.enrollmentDate);
+            const newCompletionDate = prompt("Edit Completion Date (YYYY-MM-DD):", course.date);
+            const newGrade = prompt("Edit Grade:", course.grade);
+    
+            if (newCourseId && newCourseName && newEnrollmentDate && newCompletionDate && newGrade) {
+                courses[index] = { id: newCourseId, name: newCourseName, enrollmentDate: newEnrollmentDate, date: newCompletionDate, grade: newGrade };
+                populateTable(courses);
+            } else {
+                alert("All fields are required to edit the course.");
+            }
+        }
+    
+        // Initially populate the table with sample data
+        populateTable(courses);
+    </script>
+    
+    
+    
+    
+    
+
+    <div id="projects" class="menu-spacing"></div>
+
+    <section id="proj" class="section classic-bg">
+        <h2 style="text-align: center;">
+            Projects
+            <button onclick="addProject()" style="margin-left: 20px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Add Project</button>
+        </h2>
+        
+        <table id="projects-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 20px; background-color: #000000;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ffffff; padding: 10px;">Project Title</th>
+                    <th style="border: 1px solid #ffffff; padding: 10px;">Date</th>
+                    <th style="border: 1px solid #ffffff; padding: 10px;">Contributors</th>
+                    <th style="border: 1px solid #ffffff; padding: 10px;">Links</th>
+                    <th style="border: 1px solid #ffffff; padding: 10px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated here -->
+            </tbody>
+        </table>
+    </section>
+    
+    <script>
+        // Sample data with a few projects
+        const projects = [
+           /* { title: "Online Examination System", date: "2024-10-10", contributors: "John Doe, Jane Smith", link: "https://example.com/exam-system" },
+            { title: "Digital Library Management", date: "2024-09-15", contributors: "Alice Brown, Bob Lee", link: "https://example.com/library-management" },
+            { title: "Machine Learning Model for Sales Prediction", date: "2024-08-20", contributors: "Chris Green, Laura White", link: "https://example.com/sales-ml" }
+        */];
+    
+        // Function to populate table
+        function populateProjectTable(data) {
+            const tableBody = document.querySelector("#projects-table tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+            data.forEach((project, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="border: 1px solid #ddd; padding: 10px;">${project.title}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${project.date}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${project.contributors}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><a href="${project.link}" target="_blank">${project.link}</a></td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">
+                        <button onclick="editProject(${index})" style="padding: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                        <button onclick="deleteProject(${index})" style="padding: 5px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Function to add a new project
+        function addProject() {
+            const projectTitle = prompt("Enter Project Title:");
+            const projectDate = prompt("Enter Project Date (YYYY-MM-DD):");
+            const contributors = prompt("Enter Contributors (comma-separated):");
+            const projectLink = prompt("Enter Project Link:");
+    
+            if (projectTitle && projectDate && contributors && projectLink) {
+                projects.push({ title: projectTitle, date: projectDate, contributors: contributors, link: projectLink });
+                populateProjectTable(projects);
+            } else {
+                alert("All fields are required to add a new project.");
+            }
+        }
+    
+        // Function to edit a project
+        function editProject(index) {
+            const project = projects[index];
+            const newTitle = prompt("Edit Project Title:", project.title);
+            const newDate = prompt("Edit Project Date (YYYY-MM-DD):", project.date);
+            const newContributors = prompt("Edit Contributors (comma-separated):", project.contributors);
+            const newLink = prompt("Edit Project Link:", project.link);
+    
+            if (newTitle && newDate && newContributors && newLink) {
+                projects[index] = { title: newTitle, date: newDate, contributors: newContributors, link: newLink };
+                populateProjectTable(projects);
+            } else {
+                alert("All fields are required to edit the project.");
+            }
+        }
+    
+        // Function to delete a single project
+        function deleteProject(index) {
+            projects.splice(index, 1);
+            populateProjectTable(projects);
+        }
+    
+        // Initially populate the table with sample data
+        populateProjectTable(projects);
+    </script>
+    
+
+    <section id="gallery" class="section darkgray-bg">
+        <div class="menu-spacing"></div>
+        <div class="home-content">
+            <h2 style="text-align: center;">
+                Achievements
+                <button onclick="addAchievement()" style="margin-left: 20px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Add Achievement</button>
+            </h2>
+        </div>
+    
+        <table id="achievements-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 20px; background-color: #f0f0f0;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Achievement Title</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Date</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Description</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Awarded By</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Level</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Evidence Link</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated here -->
+            </tbody>
+        </table>
+    </section>
+    
+    <script>
+        // Sample data for achievements
+        const achievements = [
+            /*{ title: "Top Coder Award", date: "2024-01-15", description: "Awarded for outstanding performance in coding challenges", awardedBy: "CodeFest", level: "National", link: "https://example.com/top-coder" },
+            { title: "AI Research Excellence", date: "2023-12-10", description: "Recognized for innovative AI research", awardedBy: "TechCon", level: "International", link: "https://example.com/ai-research" },
+            { title: "Best Intern Award", date: "2023-08-25", description: "Awarded for exceptional contribution during internship", awardedBy: "TechCorp", level: "Company", link: "https://example.com/intern-award" },
+            { title: "Data Science Hackathon Winner", date: "2024-03-10", description: "Winner of Data Science Hackathon", awardedBy: "DataFest", level: "State", link: "https://example.com/data-science" },
+    */]
+    
+        // Function to populate table
+        function populateAchievementsTable(data) {
+            const tableBody = document.querySelector("#achievements-table tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+            data.forEach((achievement, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="border: 1px solid #ddd; padding: 10px;">${achievement.title}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${achievement.date}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${achievement.description}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${achievement.awardedBy}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${achievement.level}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><a href="${achievement.link}" target="_blank">${achievement.link}</a></td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">
+                        <button onclick="editAchievement(${index})" style="padding: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                        <button onclick="deleteAchievement(${index})" style="padding: 5px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Function to add a new achievement
+        function addAchievement() {
+            const title = prompt("Enter Achievement Title:");
+            const date = prompt("Enter Achievement Date (YYYY-MM-DD):");
+            const description = prompt("Enter Description:");
+            const awardedBy = prompt("Enter Awarded By:");
+            const level = prompt("Enter Level (e.g., National, State, International):");
+            const link = prompt("Enter Evidence Link:");
+    
+            if (title && date && description && awardedBy && level && link) {
+                achievements.push({ title, date, description, awardedBy, level, link });
+                populateAchievementsTable(achievements);
+            } else {
+                alert("All fields are required to add a new achievement.");
+            }
+        }
+    
+        // Function to edit an achievement
+        function editAchievement(index) {
+            const achievement = achievements[index];
+            const newTitle = prompt("Edit Achievement Title:", achievement.title);
+            const newDate = prompt("Edit Date (YYYY-MM-DD):", achievement.date);
+            const newDescription = prompt("Edit Description:", achievement.description);
+            const newAwardedBy = prompt("Edit Awarded By:", achievement.awardedBy);
+            const newLevel = prompt("Edit Level:", achievement.level);
+            const newLink = prompt("Edit Evidence Link:", achievement.link);
+    
+            if (newTitle && newDate && newDescription && newAwardedBy && newLevel && newLink) {
+                achievements[index] = { title: newTitle, date: newDate, description: newDescription, awardedBy: newAwardedBy, level: newLevel, link: newLink };
+                populateAchievementsTable(achievements);
+            } else {
+                alert("All fields are required to edit the achievement.");
+            }
+        }
+    
+        // Function to delete a single achievement
+        function deleteAchievement(index) {
+            achievements.splice(index, 1);
+            populateAchievementsTable(achievements);
+        }
+    
+        // Initially populate the table with sample data
+        populateAchievementsTable(achievements);
+    </script>
+    
+
+    <div id="internship" class="menu-spacing"></div>
+    <section id="intern" class="section classic-bg">
+        <h2 style="text-align: center;">
+            Internships
+            <button onclick="addInternship()" style="margin-left: 20px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Add Internship</button>
+        </h2>
+    
+        <table id="internships-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 20px; background-color: #000000;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Company Name</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Position</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Start Date</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">End Date</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Responsibilities</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Technologies Used</th>
+                    <th style="border: 1px solid #ddd; padding: 10px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated here -->
+            </tbody>
+        </table>
+    </section>
+    
+    <script>
+        // Sample data for internships
+        const internships = [
+            /*{ companyName: "TechCorp", position: "Software Intern", startDate: "2023-06-01", endDate: "2023-08-30", responsibilities: "Developed backend APIs and improved database performance.", technologies: "Node.js, MongoDB" },
+            { companyName: "DataSci Inc.", position: "Data Analyst Intern", startDate: "2023-05-01", endDate: "2023-07-15", responsibilities: "Analyzed data trends and prepared visual reports.", technologies: "Python, Tableau" },
+            { companyName: "Innovatech", position: "Product Management Intern", startDate: "2023-04-01", endDate: "2023-06-30", responsibilities: "Assisted in product roadmap and customer interviews.", technologies: "Jira, Confluence" },
+            { companyName: "Webify Solutions", position: "Frontend Developer Intern", startDate: "2023-07-10", endDate: "2023-09-10", responsibilities: "Designed and implemented responsive web layouts.", technologies: "React, CSS" },
+            { companyName: "CyberSec Labs", position: "Cybersecurity Intern", startDate: "2023-01-15", endDate: "2023-03-15", responsibilities: "Monitored security protocols and conducted vulnerability assessments.", technologies: "Kali Linux, Wireshark" }
+        */];
+    
+        // Function to populate table
+        function populateInternshipsTable(data) {
+            const tableBody = document.querySelector("#internships-table tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+            data.forEach((internship, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="border: 1px solid #ddd; padding: 10px;">${internship.companyName}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${internship.position}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${internship.startDate}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${internship.endDate}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${internship.responsibilities}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${internship.technologies}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">
+                        <button onclick="editInternship(${index})" style="padding: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                        <button onclick="deleteInternship(${index})" style="padding: 5px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Function to add a new internship
+        function addInternship() {
+            const companyName = prompt("Enter Company Name:");
+            const position = prompt("Enter Position:");
+            const startDate = prompt("Enter Start Date (YYYY-MM-DD):");
+            const endDate = prompt("Enter End Date (YYYY-MM-DD):");
+            const responsibilities = prompt("Enter Responsibilities:");
+            const technologies = prompt("Enter Technologies Used:");
+    
+            if (companyName && position && startDate && endDate && responsibilities && technologies) {
+                internships.push({ companyName, position, startDate, endDate, responsibilities, technologies });
+                populateInternshipsTable(internships);
+            } else {
+                alert("All fields are required to add a new internship.");
+            }
+        }
+    
+        // Function to edit an internship
+        function editInternship(index) {
+            const internship = internships[index];
+            const newCompanyName = prompt("Edit Company Name:", internship.companyName);
+            const newPosition = prompt("Edit Position:", internship.position);
+            const newStartDate = prompt("Edit Start Date (YYYY-MM-DD):", internship.startDate);
+            const newEndDate = prompt("Edit End Date (YYYY-MM-DD):", internship.endDate);
+            const newResponsibilities = prompt("Edit Responsibilities:", internship.responsibilities);
+            const newTechnologies = prompt("Edit Technologies Used:", internship.technologies);
+    
+            if (newCompanyName && newPosition && newStartDate && newEndDate && newResponsibilities && newTechnologies) {
+                internships[index] = { companyName: newCompanyName, position: newPosition, startDate: newStartDate, endDate: newEndDate, responsibilities: newResponsibilities, technologies: newTechnologies };
+                populateInternshipsTable(internships);
+            } else {
+                alert("All fields are required to edit the internship.");
+            }
+        }
+    
+        // Function to delete a single internship
+        function deleteInternship(index) {
+            internships.splice(index, 1);
+            populateInternshipsTable(internships);
+        }
+    
+        // Initially populate the table with sample data
+        populateInternshipsTable(internships);
+    </script>
+    
+
+    <div class="menu-spacing"></div>
+    <section id="cert" class="section darkgray-bg">
+        <div id="workshop-section" class="menu-spacing"></div>
+        <div class="home-content">
+            <h2 style="text-align: center;">
+                Workshops
+                <button onclick="addWorkshop()" style="margin-left: 20px; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Add Workshop</button>
+            </h2>
+    
+            <table id="workshops-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 20px; background-color: #f0f0f0;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Workshop Title</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Date</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Organizer</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Duration</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Topics Covered</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Certificate Link</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Mode</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <script>
+        // Sample data with at least 5 workshops
+        const workshops = [
+           /* { title: "Web Development Bootcamp", date: "2024-10-05", organizer: "Tech Academy", duration: "3 days", topics: "HTML, CSS, JavaScript", certificateLink: "#", mode: "Offline" },
+            { title: "Data Science Workshop", date: "2024-09-20", organizer: "Data Institute", duration: "1 week", topics: "Python, Machine Learning", certificateLink: "#", mode: "Online" },
+            { title: "Cybersecurity Essentials", date: "2024-08-15", organizer: "CyberSafe", duration: "2 days", topics: "Network Security, Ethical Hacking", certificateLink: "#", mode: "Offline" },
+            { title: "Mobile App Development", date: "2024-07-10", organizer: "App Innovators", duration: "4 days", topics: "Flutter, Dart", certificateLink: "#", mode: "Online" },
+            { title: "Cloud Computing Fundamentals", date: "2024-06-05", organizer: "Cloud Experts", duration: "5 days", topics: "AWS, Azure", certificateLink: "#", mode: "Online" }
+        */];
+    
+        // Function to populate the workshops table
+        function populateWorkshopsTable(data) {
+            const tableBody = document.querySelector("#workshops-table tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+            data.forEach((workshop, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="border: 1px solid #ddd; padding: 10px;">${workshop.title}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${workshop.date}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${workshop.organizer}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${workshop.duration}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${workshop.topics}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;"><a href="${workshop.certificateLink}" target="_blank">View Certificate</a></td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">${workshop.mode}</td>
+                    <td style="border: 1px solid #ddd; padding: 10px;">
+                        <button onclick="editWorkshop(${index})" style="padding: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                        <button onclick="deleteWorkshop(${index})" style="padding: 5px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Function to add a new workshop
+        function addWorkshop() {
+            const title = prompt("Enter Workshop Title:");
+            const date = prompt("Enter Date (YYYY-MM-DD):");
+            const organizer = prompt("Enter Organizer:");
+            const duration = prompt("Enter Duration:");
+            const topics = prompt("Enter Topics Covered:");
+            const certificateLink = prompt("Enter Certificate Link:");
+            const mode = prompt("Enter Mode (Online/Offline):");
+    
+            if (title && date && organizer && duration && topics && certificateLink && mode) {
+                workshops.push({ title, date, organizer, duration, topics, certificateLink, mode });
+                populateWorkshopsTable(workshops);
+            } else {
+                alert("All fields are required to add a new workshop.");
+            }
+        }
+    
+        // Function to delete a single workshop
+        function deleteWorkshop(index) {
+            workshops.splice(index, 1);
+            populateWorkshopsTable(workshops);
+        }
+    
+        // Function to edit a workshop
+        function editWorkshop(index) {
+            const workshop = workshops[index];
+            const newTitle = prompt("Edit Workshop Title:", workshop.title);
+            const newDate = prompt("Edit Date (YYYY-MM-DD):", workshop.date);
+            const newOrganizer = prompt("Edit Organizer:", workshop.organizer);
+            const newDuration = prompt("Edit Duration:", workshop.duration);
+            const newTopics = prompt("Edit Topics Covered:", workshop.topics);
+            const newCertificateLink = prompt("Edit Certificate Link:", workshop.certificateLink);
+            const newMode = prompt("Edit Mode (Online/Offline):", workshop.mode);
+    
+            if (newTitle && newDate && newOrganizer && newDuration && newTopics && newCertificateLink && newMode) {
+                workshops[index] = { title: newTitle, date: newDate, organizer: newOrganizer, duration: newDuration, topics: newTopics, certificateLink: newCertificateLink, mode: newMode };
+                populateWorkshopsTable(workshops);
+            } else {
+                alert("All fields are required to edit the workshop.");
+            }
+        }
+    
+        // Initially populate the workshops table with sample data
+        populateWorkshopsTable(workshops);
+    </script>
+    
+
+    <section class="section classic-bg">
+        <div id="print-academic-details" class="menu-spacing"></div>
+        <div class="home-content">
+            <h2 style="text-align: center;">Print Academic Details</h2>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="printAcademicData()" style="padding: 10px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Print Academic Data</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer-cl">
+        <span>Created By <a href="https://github.com/harishy0406">Harish Gautham</a> | <span class="far fa-copyright"></span> 2024 All rights reserved.</span>
+    </footer>
+    
+</body>
+
+</html>
